@@ -32,13 +32,17 @@ def seasons_problem(data):
             return "Fall"
         else:
             return "Winter"
-    return list(map(
-        lambda order: {
-            'ORD_ID': order['ORD_ID'],
-            'SEASON': season(order['ORD_DT'])
-        },
-        data
-    ))
+    pd_data = pd.DataFrame(data)
+    pd_data["SEASON"] = pd_data.ORD_DT.apply(season)
+    #print(pd.DataFrame(pd_data))
+    return pd_data[["ORD_ID", "SEASON"]]
+    #return list(map(
+    #    lambda order: {
+    #        'ORD_ID': order['ORD_ID'],
+    #        'SEASON': season(order['ORD_DT'])
+    #    },
+    #    data
+    #))
 
 
 def detecting_change(data):
